@@ -1,12 +1,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywa z initramfs
 Name:		klibc
-Version:	0.79
+Version:	0.81
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	82b8864b40ecff6937318ce6273e7137
+# Source0-md5:	22b7bf399748c541ad0a1fe681be6204
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 BuildRequires:	kernel-source >= 2.4
 BuildRequires:	perl
