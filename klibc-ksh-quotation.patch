@@ -1,0 +1,11 @@
+--- klibc-0.193/ash/mkinit.sh.orig	2004-12-12 19:02:12.000000000 +0100
++++ klibc-0.193/ash/mkinit.sh	2004-12-12 19:41:26.328715408 +0100
+@@ -88,7 +88,7 @@
+ 			IFS=' 	'
+ 			set -- $line
+ 			# Ignore those with arguments
+-			[ "$2" = "${2##*(}" ] || continue
++			[ "$2" = "${2##*\(}" ] || continue
+ 			# and multiline definitions
+ 			[ "$line" = "${line%\\}" ] || continue
+ 			defines="${defines}#undef  $2${nl}${line}${nl}"
