@@ -1,18 +1,22 @@
+#
+# Conditional build:
+%bcond_without	dist_kernel	# build without distribution kernel-headers
+#
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywa z initramfs
 Name:		klibc
-Version:	0.81
+Version:	0.87
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	22b7bf399748c541ad0a1fe681be6204
+# Source0-md5:	51e93c1a42fe432c0eb5e98f5374ac6e
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
-BuildRequires:	kernel-source >= 2.4
-BuildRequires:	perl
+%{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
+BuildRequires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define no_install_post_strip 1
+%define		no_install_post_strip	1
 
 %description
 klibc, what is intended to be a minimalistic libc subset for use with
@@ -50,7 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_includedir}/klibc
 %dir %{_libdir}/klibc
-%{_libdir}/klibc/*.[ao]
 %attr(755,root,root) %{_libdir}/klibc/*.so
+%{_libdir}/klibc/*.[ao]
+%{_includedir}/klibc
