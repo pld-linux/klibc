@@ -5,15 +5,18 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
-Version:	0.150
+Version:	0.193
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	062b0f7962b34cbb72849ffa601c9539
+# Source0-md5:	d2616bbc5762dc1f2f9ebd87b597644e
+Patch0:		%{name}-ksh-quotation.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
+BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRequires:	perl-base
+%{?with_dist_kernel:Requires:	kernel-headers >= 2.4}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		no_install_post_strip	1
@@ -55,9 +58,13 @@ Narzêdzia statycznie zlinkowane z klibc.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-ln -s %{_kernelsrcdir} linux
+rm -rf include/{asm,generic,linux}
+ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+ln -sf %{_kernelsrcdir}/include/asm-generic include/asm-generic
+ln -sf %{_kernelsrcdir}/include/linux include/linux
 
 %{__make} \
 	CC=%{__cc} \
@@ -69,7 +76,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/klibc
 install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 
-cp -a klibc/include/* $RPM_BUILD_ROOT%{_includedir}/klibc
+cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
 install klibc/libc.* klibc/crt0.o	$RPM_BUILD_ROOT%{_libdir}/klibc
 
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
