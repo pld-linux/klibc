@@ -31,9 +31,9 @@ szybko¶æ. klibc jest rozwijan± bibliotek± w zwi±zku z czym nadal
 brakuje wielu rzeczy.
 
 %package utils-shared
-Summary:        Utilities dynamically linked with klibc
+Summary:	Utilities dynamically linked with klibc
 Summary(pl):	Narzêdzia dynamicznie zlinkowane z klibc
-Group:          Base
+Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description utils-shared
@@ -43,9 +43,9 @@ Utilities dynamically linked with klibc.
 Narzêdzia dynamicznie zlinkowane z klibc.
 
 %package utils-static
-Summary:        Utilities statically linked with klibc
+Summary:	Utilities statically linked with klibc
 Summary(pl):	Narzêdzia statycznie zlinkowane z klibc
-Group:          Base
+Group:		Base
 
 %description utils-static
 Utilities staticly linked with klibc.
