@@ -1,7 +1,7 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywa z initramfs
 Name:		klibc
-Version:	0.11
+Version:	0.22
 Release:	1
 License:	BSD
 Group:		Libraries
@@ -31,11 +31,11 @@ brakuje wielu rzeczy.
 ln -s %{_kernelsrcdir} linux
 
 # 32 bit archs
-%ifarch %{ix86} sparc sparc32
+%ifarch %{ix86} sparc sparc32 ppc
 ln -sf bits32 include/bitsize
 %endif
 # 64 bit archs
-%ifarch alpha sparc64
+%ifarch alpha sparc64 ppc64
 ln -sf bits64 include/bitsize
 %endif
 
