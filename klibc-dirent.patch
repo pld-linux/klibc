@@ -1,10 +1,13 @@
---- klibc-0.193/kinit/do_mounts.c.orig	2004-10-26 09:24:13.000000000 +0200
-+++ klibc-0.193/kinit/do_mounts.c	2004-12-12 20:42:00.436730704 +0100
-@@ -8,6 +8,7 @@
- #include <string.h>
- #include <unistd.h>
- #include <alloca.h>
-+#include <linux/dirent.h>
+--- klibc-0.193/kinit/do_mounts.c.orig	2004-12-12 21:00:13.721526152 +0100
++++ klibc-0.193/kinit/do_mounts.c	2004-12-12 21:00:39.626587984 +0100
+@@ -162,8 +162,8 @@
  
- #include "do_mounts.h"
- #include "kinit.h"
+ 	if (!p)
+ 		return -1;
+-	for (s = p; s < p + size; s += ((struct linux_dirent64 *)s)->d_reclen) {
+-		struct linux_dirent64 *d = (struct linux_dirent64 *)s;
++	for (s = p; s < p + size; s += ((struct dirent *)s)->d_reclen) {
++		struct dirent *d = (struct dirent *)s;
+ 		if (strlen(d->d_name) + 2 > rest)
+ 			continue;
+ 		switch (d->d_type) {
