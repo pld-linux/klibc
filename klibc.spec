@@ -30,6 +30,20 @@ do u¿ycia z initramfs. Celem jest minimalizacja, przeno¶no¶æ ale nie
 szybko¶æ. klibc jest rozwijan± bibliotek± w zwi±zku z czym nadal
 brakuje wielu rzeczy.
 
+%package utils-shared
+Summary:        Utilities dynamicly linked with klibc
+Group:          Base
+
+%description utils-shared
+Utilities dynamicly linked with klibc.
+
+%package utils-static
+Summary:        Utilities staticly linked with klibc
+Group:          Base
+
+%description utils-static
+Utilities staticly linked with klibc.
+
 %prep
 %setup -q
 
@@ -44,10 +58,13 @@ ln -s %{_kernelsrcdir} linux
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/klibc
-install -d $RPM_BUILD_ROOT%{_libdir}/klibc
+install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 
 cp -a klibc/include/* $RPM_BUILD_ROOT%{_includedir}/klibc
 install klibc/libc.* klibc/crt0.o	$RPM_BUILD_ROOT%{_libdir}/klibc
+
+install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
+install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -58,3 +75,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/klibc/*.so
 %{_libdir}/klibc/*.[ao]
 %{_includedir}/klibc
+
+%files utils-shared
+%defattr(644,root,root,755)
+%dir %{_libdir}/klibc/bin-shared
+%attr(755,root,root) %{_libdir}/klibc/bin-shared/*
+
+%files utils-static
+%defattr(644,root,root,755)
+%dir %{_libdir}/klibc/bin-static
+%attr(755,root,root) %{_libdir}/klibc/bin-static/*
