@@ -1,11 +1,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywa z initramfs
 Name:		klibc
-Version:	0.22
+Version:	0.79
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
+URL:		http://www.zytor.com/mailman/listinfo/klibc/
 BuildRequires:	kernel-source >= 2.4
 BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -30,21 +31,8 @@ brakuje wielu rzeczy.
 %build
 ln -s %{_kernelsrcdir} linux
 
-# 32 bit archs
-%ifarch %{ix86} sparc sparc32 ppc
-ln -sf bits32 include/bitsize
-%endif
-# 64 bit archs
-%ifarch alpha sparc64 ppc64
-ln -sf bits64 include/bitsize
-%endif
-
 %{__make} \
-%ifarch %{ix86}
-	ARCH=i386 \
-%else
-	ARCH=%{_target_cpu} \
-%endif
+	CC=%{__cc} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0"
 
@@ -53,8 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}/klibc
 install -d $RPM_BUILD_ROOT%{_libdir}/klibc
 
-cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
-install libc.* crt0.o	$RPM_BUILD_ROOT%{_libdir}/klibc
+cp -a klibc/include/* $RPM_BUILD_ROOT%{_includedir}/klibc
+install klibc/libc.* klibc/crt0.o	$RPM_BUILD_ROOT%{_libdir}/klibc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
