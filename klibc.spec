@@ -3,7 +3,7 @@
 %bcond_without	dist_kernel	# build without distribution kernel-headers
 #
 Summary:	Minimalistic libc subset for use with initramfs
-Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywa z initramfs
+Summary(pl):	Zminimalizowany podzbiór bibliteki C do u¿ywania z initramfs
 Name:		klibc
 Version:	0.87
 Release:	1
@@ -26,8 +26,8 @@ progress, and a lot of things are still missing.
 
 %description -l pl
 klibc w zamierzeniu ma byæ minimalistycznym podzbiorem biblioteki libc
-do u¿ycia z initramfs. Celem jest minimalizacja, przenaszalno¶æ ale
-nie szybko¶æ. klibc jest rozwijan± bibliotek± w zwi±zku z czym nadal
+do u¿ycia z initramfs. Celem jest minimalizacja, przeno¶no¶æ ale nie
+szybko¶æ. klibc jest rozwijan± bibliotek± w zwi±zku z czym nadal
 brakuje wielu rzeczy.
 
 %prep
