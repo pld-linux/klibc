@@ -12,6 +12,7 @@ Group:		Libraries
 Source0:	ftp://ftp.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	d2616bbc5762dc1f2f9ebd87b597644e
 Patch0:		%{name}-ksh-quotation.patch
+Patch1:		%{name}-dirent.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	rpmbuild(macros) >= 1.153
@@ -59,9 +60,10 @@ Narzêdzia statycznie zlinkowane z klibc.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
-rm -rf include/{asm,generic,linux}
+rm -rf include/{asm,asm-generic,linux}
 ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
 ln -sf %{_kernelsrcdir}/include/asm-generic include/asm-generic
 ln -sf %{_kernelsrcdir}/include/linux include/linux
@@ -69,7 +71,7 @@ ln -sf %{_kernelsrcdir}/include/linux include/linux
 %{__make} \
 	CC=%{__cc} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
-		-falign-jumps=0 -falign-loops=0"
+		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
 %install
 rm -rf $RPM_BUILD_ROOT

@@ -1,0 +1,10 @@
+--- klibc-0.193/kinit/do_mounts.c.orig	2004-10-26 09:24:13.000000000 +0200
++++ klibc-0.193/kinit/do_mounts.c	2004-12-12 20:42:00.436730704 +0100
+@@ -8,6 +8,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <alloca.h>
++#include <linux/dirent.h>
+ 
+ #include "do_mounts.h"
+ #include "kinit.h"
