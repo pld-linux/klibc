@@ -1,6 +1,14 @@
---- klibc-0.193/kinit/do_mounts.c.orig	2004-12-12 21:00:13.721526152 +0100
-+++ klibc-0.193/kinit/do_mounts.c	2004-12-12 21:00:39.626587984 +0100
-@@ -162,8 +162,8 @@
+--- klibc-0.193/kinit/do_mounts.c.orig	2004-12-12 21:12:27.000000000 +0100
++++ klibc-0.193/kinit/do_mounts.c	2004-12-12 21:13:41.211035224 +0100
+@@ -1,6 +1,7 @@
+ #include <ctype.h>
+ #include <errno.h>
+ #include <fcntl.h>
++#include <sys/dirent.h>
+ #include <sys/mount.h>
+ #include <sys/stat.h>
+ #include <stdio.h>
+@@ -162,8 +163,8 @@
  
  	if (!p)
  		return -1;
