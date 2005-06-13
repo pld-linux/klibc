@@ -12,6 +12,7 @@ Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	daaa233fb7905cbe110896fcad9bec7f
 Patch0:		%{name}-ksh-quotation.patch
+Patch1:		%{name}-klcc.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	rpmbuild(macros) >= 1.153
@@ -59,6 +60,7 @@ Narzêdzia statycznie zlinkowane z klibc.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -rf include/{asm,asm-generic,linux}
@@ -74,6 +76,10 @@ ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h
 %else
 	CC=%{__cc} \
 %endif
+	bindir=%{_bindir} \
+	includedir=%{_includedir}/klibc \
+	libdir=%{_libdir}/klibc \
+	prefix=%{_prefix} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
@@ -85,7 +91,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
 install klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
-install klibc/libc.* klibc/crt0.o $RPM_BUILD_ROOT%{_libdir}/klibc
+install klibc/libc.* klibc/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
