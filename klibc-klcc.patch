@@ -1,0 +1,47 @@
+--- klibc-1.0/klcc.in.orig	2005-03-07 22:44:49.000000000 +0100
++++ klibc-1.0/klcc.in	2005-06-13 21:05:09.000000000 +0200
+@@ -1,9 +1,9 @@
+ # -*- perl -*-
+ 
+ # Standard includes
+-@includes = ("-I${prefix}/${KCROSS}include/arch/${ARCH}",
+-	     "-I${prefix}/${KCROSS}include/bits${BITSIZE}",
+-	     "-I${prefix}/${KCROSS}include");
++@includes = ("-I${includedir}/arch/${ARCH}",
++	     "-I${includedir}/bits${BITSIZE}",
++	     "-I${includedir}");
+ 
+ # Default optimization options (for compiles without -g)
+ @optopt =  @OPTFLAGS;
+@@ -13,10 +13,10 @@
+ @stdlibpath = ("-L${prefix}/${KCROSS}lib");
+ 
+ # Options and libraries to pass to ld; shared versus static
+-@staticopt = ("${prefix}/${KCROSS}lib/crt0.o");
+-@staticlib = ("${prefix}/${KCROSS}lib/libc.a");
+-@sharedopt = (@EMAIN, "${prefix}/${KCROSS}lib/interp.o");
+-@sharedlib = ('-R', "${prefix}/${KCROSS}lib/libc.so");
++@staticopt = ("${libdir}/crt0.o");
++@staticlib = ("${libdir}/libc.a");
++@sharedopt = (@EMAIN, "${libdir}/interp.o");
++@sharedlib = ('-R', "${libdir}/libc.so");
+ 
+ # Returns the language (-x option string) for a specific extension.
+ sub filename2lang($) {
+--- klibc-1.0/Makefile.orig	2005-03-07 19:17:15.000000000 +0100
++++ klibc-1.0/Makefile	2005-06-13 20:57:41.000000000 +0200
+@@ -27,10 +27,10 @@
+ 	echo 'STRIPFLAGS=$(STRIPFLAGS)' >> $@
+ 	echo 'EMAIN=$(EMAIN)' >> $@
+ 	echo 'BITSIZE=$(BITSIZE)' >> $@
+-	echo 'prefix=$(INSTALLDIR)' >> $@
+-	echo 'bindir=$(INSTALLDIR)/$(KCROSS)bin' >> $@
+-	echo 'libdir=$(INSTALLDIR)/$(KCROSS)lib' >> $@
+-	echo 'includedir=$(INSTALLDIR)/$(KCROSS)include' >> $@
++	echo 'prefix=$(prefix)' >> $@
++	echo 'bindir=$(bindir)' >> $@
++	echo 'libdir=$(libdir)' >> $@
++	echo 'includedir=$(includedir)' >> $@
+ 
+ $(CROSS)klcc: klcc.in $(CROSS)klibc.config makeklcc.pl
+ 	$(PERL) makeklcc.pl klcc.in $(CROSS)klibc.config \
