@@ -1,6 +1,6 @@
 --- klibc-1.0/klcc.in.orig	2005-03-07 22:44:49.000000000 +0100
 +++ klibc-1.0/klcc.in	2005-06-13 21:05:09.000000000 +0200
-@@ -1,9 +1,9 @@
+@@ -1,22 +1,22 @@
  # -*- perl -*-
  
  # Standard includes
@@ -13,21 +13,32 @@
  
  # Default optimization options (for compiles without -g)
  @optopt =  @OPTFLAGS;
-@@ -13,10 +13,10 @@
- @stdlibpath = ("-L${prefix}/${KCROSS}lib");
+ @goptopt = ('-O');
+ 
+ # Standard library directories
+-@stdlibpath = ("-L${prefix}/${KCROSS}lib");
++@stdlibpath = ("-L${libdir}");
  
  # Options and libraries to pass to ld; shared versus static
 -@staticopt = ("${prefix}/${KCROSS}lib/crt0.o");
 -@staticlib = ("${prefix}/${KCROSS}lib/libc.a");
 -@sharedopt = (@EMAIN, "${prefix}/${KCROSS}lib/interp.o");
 -@sharedlib = ('-R', "${prefix}/${KCROSS}lib/libc.so");
-+@staticopt = ("${libdir}/crt0.o");
-+@staticlib = ("${libdir}/libc.a");
-+@sharedopt = (@EMAIN, "${libdir}/interp.o");
-+@sharedlib = ('-R', "${libdir}/libc.so");
++@staticopt = ("${libdir}/klibc/crt0.o");
++@staticlib = ("${libdir}/klibc/libc.a");
++@sharedopt = (@EMAIN, "${libdir}/klibc/interp.o");
++@sharedlib = ('-R', "${libdir}/klibc/libc.so");
  
  # Returns the language (-x option string) for a specific extension.
  sub filename2lang($) {
+@@ -164,6 +164,7 @@
+     } elsif ( $a eq '-shared' ) {
+ 	$shared = 1;
+     } elsif ( $a eq '-static' ) {
++	push(@ldopt, $a);
+ 	$shared = 0;
+     } elsif ( $a eq '-s' ) {
+ 	$strip = 1;
 --- klibc-1.0/Makefile.orig	2005-03-07 19:17:15.000000000 +0100
 +++ klibc-1.0/Makefile	2005-06-13 20:57:41.000000000 +0200
 @@ -27,10 +27,10 @@

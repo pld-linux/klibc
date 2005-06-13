@@ -78,7 +78,7 @@ ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h
 %endif
 	bindir=%{_bindir} \
 	includedir=%{_includedir}/klibc \
-	libdir=%{_libdir}/klibc \
+	libdir=%{_libdir} \
 	prefix=%{_prefix} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
