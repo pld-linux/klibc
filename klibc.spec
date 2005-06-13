@@ -7,7 +7,7 @@ Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
 Version:	1.0
 Release:	0.1
-License:	BSD
+License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	daaa233fb7905cbe110896fcad9bec7f
@@ -70,7 +70,12 @@ cp -ar %{_kernelsrcdir}/include/linux include/linux
 ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h
 
 %{__make} \
+%if "%{_target_base_arch}" != "%{_arch}"
+	ARCH=%{_target_base_arch} \
+	CROSS=%{_target_base_arch}-pld-linux- \
+%else
 	CC=%{__cc} \
+%endif
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
