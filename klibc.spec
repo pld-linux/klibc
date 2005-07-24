@@ -67,14 +67,14 @@ rm -rf include/{asm,asm-generic,linux}
 ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
 ln -sf %{_kernelsrcdir}/include/asm-generic include/asm-generic
 cp -ar %{_kernelsrcdir}/include/linux include/linux
-ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h
+%{?with_dist_kernel:ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h}
 
 %{__make} \
 %if 0
 	ARCH=%{_target_base_arch} \
 	CROSS=%{_target_base_arch}-pld-linux- \
 %else
-	CC=%{__cc} \
+	CC="%{__cc}" \
 %endif
 	bindir=%{_bindir} \
 	includedir=%{_includedir}/klibc \
