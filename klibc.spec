@@ -5,12 +5,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
-Version:	1.0.14
-Release:	1
+Version:	1.1.1
+Release:	0.1
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
-# Source0-md5:	882492395506ffb5f4cdbfca11eeb3d6
+# Source0-md5:	baa1f6e0b6acbf9576bb28cca5c32c89
 Patch0:		%{name}-ksh-quotation.patch
 Patch1:		%{name}-klcc.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
@@ -63,35 +63,37 @@ Narzêdzia statycznie zlinkowane z klibc.
 %patch1 -p1
 
 %build
-rm -rf include/{asm,asm-generic,linux}
-ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
-ln -sf %{_kernelsrcdir}/include/asm-generic include/asm-generic
-cp -ar %{_kernelsrcdir}/include/linux include/linux
-%{?with_dist_kernel:ln -sf %{_kernelsrcdir}/include/linux/autoconf-up.h include/linux/autoconf.h}
+cd include
+rm -rf asm asm-generic linux
+cp -a %{_kernelsrcdir}/include/asm-%{_target_base_arch} .
+ln -sf asm-%{_target_base_arch} asm
+cp -a %{_kernelsrcdir}/include/asm-generic .
+cp -a %{_kernelsrcdir}/include/linux .
+%{?with_dist_kernel:cp -a %{_kernelsrcdir}/include/linux/autoconf-up.h linux/autoconf.h}
+cd ..
 
 %{__make} \
-%if 0
 	ARCH=%{_target_base_arch} \
-	CROSS=%{_target_base_arch}-pld-linux- \
-%else
 	CC="%{__cc}" \
-%endif
+	prefix=%{_prefix} \
 	bindir=%{_bindir} \
 	includedir=%{_includedir}/klibc \
 	libdir=%{_libdir} \
-	prefix=%{_prefix} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/%{_lib}
 install -d $RPM_BUILD_ROOT%{_includedir}/klibc
 install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 
 cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
+
 install klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
 install klibc/libc.* klibc/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
+install klibc/klibc-*.so $RPM_BUILD_ROOT/%{_lib}
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
@@ -100,10 +102,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/klibc*.so
 %attr(755,root,root) %{_bindir}/klcc
 %{_includedir}/klibc
 %dir %{_libdir}/klibc
 %attr(755,root,root) %{_libdir}/klibc/*.so
+%{_libdir}/klibc/*.so.hash
 %{_libdir}/klibc/*.[ao]
 %{_mandir}/man1/*
 
