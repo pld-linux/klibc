@@ -114,6 +114,7 @@ cd ..
 	bindir=%{_bindir} \
 	includedir=%{_includedir}/klibc \
 	libdir=%{_libdir} \
+	SHLIBDIR=/%{_lib} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
