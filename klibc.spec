@@ -18,7 +18,6 @@ Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.t
 Patch0:		%{name}-ksh-quotation.patch
 Patch1:		%{name}-klcc.patch
 Patch2:		%{name}-fstype_jfs.patch
-Patch3:		%{name}-kill_bashism.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	rpmbuild(macros) >= 1.153
@@ -93,7 +92,6 @@ Narzêdzia statycznie zlinkowane z klibc.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
-%patch3 -p1
 
 %build
 cd include
