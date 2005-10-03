@@ -43,7 +43,7 @@ brakuje wielu rzeczy.
 Summary:	Development files for klibc
 Summary(pl):	Pliki dla programistów klibc
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Requires:	binutils
 %{?with_dist_kernel:Requires:	kernel-headers >= 2.4}
 
@@ -57,7 +57,7 @@ Ma³a libc do budowania aplikacji wbudowanych - pliki dla programistów.
 Summary:	Static klibc libraries
 Summary(pl):	Biblioteki statyczne klibc
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static klibc libraries.
