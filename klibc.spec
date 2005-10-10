@@ -1,8 +1,4 @@
 #
-# TODO:
-#	-	fix klibc loader crash:
-#		http://www.zytor.com/pipermail/klibc/2005-September/001150.html
-#
 # Conditional build:
 %bcond_without	dist_kernel	# build without distribution kernel-headers
 #
@@ -19,6 +15,7 @@ Patch0:		%{name}-ksh-quotation.patch
 Patch1:		%{name}-klcc.patch
 Patch2:		%{name}-fstype_jfs.patch
 Patch3:		%{name}-ksh-syntax.patch
+Patch4:		%{name}-kill_interp_sohash.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	rpmbuild(macros) >= 1.153
@@ -94,6 +91,7 @@ Narzêdzia statycznie zlinkowane z klibc.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 %build
 cd include
@@ -130,7 +128,7 @@ cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
 install klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
 install klibc/libc.* klibc/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
-install klibc/klibc-*.so $RPM_BUILD_ROOT/%{_lib}
+install klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
@@ -139,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) /%{_lib}/klibc*.so
+%attr(755,root,root) /%{_lib}/klibc.so
 
 %files devel
 %defattr(644,root,root,755)

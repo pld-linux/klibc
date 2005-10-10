@@ -1,0 +1,11 @@
+--- klibc-1.1.1/klibc/interp.S.orig	2005-09-06 22:49:34.000000000 +0200
++++ klibc-1.1.1/klibc/interp.S	2005-10-10 19:20:37.275386250 +0200
+@@ -7,7 +7,5 @@
+ 	
+         .section ".interp","a"
+         .ascii LIBDIR
+-	.ascii "/klibc-"
+-        .ascii SOHASH
+-        .ascii ".so"
++        .ascii "/klibc.so"
+         .byte 0
