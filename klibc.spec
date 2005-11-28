@@ -6,7 +6,7 @@ Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
 Version:	1.1.1
-Release:	1
+Release:	2
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
@@ -94,10 +94,19 @@ Narzêdzia statycznie zlinkowane z klibc.
 %patch4 -p1
 
 %build
+rm -rf include/{asm,asm-generic,linux}
+%ifarch ppc powerpc
+if [ -d %{_kernelsrcdir}/include/asm-powerpc ]; then
+	install -d include/asm
+	cp -a %{_kernelsrcdir}/include/asm-ppc/* include/asm/
+	cp -a %{_kernelsrcdir}/include/asm-powerpc/* include/asm/
+else
+	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+fi
+%else
+	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+%endif
 cd include
-rm -rf asm asm-generic linux
-ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} .
-ln -sf asm-%{_target_base_arch} asm
 ln -sf %{_kernelsrcdir}/include/asm-generic .
 ln -sf %{_kernelsrcdir}/include/linux .
 %if %{with dist_kernel}
