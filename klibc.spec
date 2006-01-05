@@ -18,6 +18,8 @@ Patch3:		%{name}-ksh-syntax.patch
 Patch4:		%{name}-kill_interp_sohash.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
+BuildRequires:	bison
+BuildRequires:	flex
 BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRequires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -138,6 +140,8 @@ install klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
 install klibc/libc.* klibc/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
 install klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
+install ash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
+install ash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
