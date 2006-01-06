@@ -5,17 +5,14 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
-Version:	1.1.1
-Release:	2
+Version:	1.1.16
+Release:	1
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
-# Source0-md5:	baa1f6e0b6acbf9576bb28cca5c32c89
-Patch0:		%{name}-ksh-quotation.patch
-Patch1:		%{name}-klcc.patch
-Patch2:		%{name}-fstype_jfs.patch
-Patch3:		%{name}-ksh-syntax.patch
-Patch4:		%{name}-kill_interp_sohash.patch
+# Source0-md5:	80b85e84306695ed61049720008dd409
+Patch0:		%{name}-klcc.patch
+Patch1:		%{name}-kill_interp_sohash.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	bison
@@ -91,9 +88,6 @@ Narzêdzia statycznie zlinkowane z klibc.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p0
-%patch3 -p1
-%patch4 -p1
 
 %build
 rm -rf include/{asm,asm-generic,linux}
@@ -136,12 +130,12 @@ install -d $RPM_BUILD_ROOT%{_includedir}/klibc
 install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 
 cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
-install klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
-install klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
-install klibc/libc.* klibc/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
+install klcc/klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
+install klcc/klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
+install klibc/libc.* klibc/arch/%{_target_base_arch}/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
 install klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
-install ash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
-install ash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
+install dash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
+install dash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
