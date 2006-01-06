@@ -1,5 +1,24 @@
---- klibc-1.0/klcc/klcc.in.orig	2005-03-07 22:44:49.000000000 +0100
-+++ klibc-1.0/klcc/klcc.in	2005-06-13 21:05:09.000000000 +0200
+diff -urN klibc-1.1.16.org/klcc/Kbuild klibc-1.1.16/klcc/Kbuild
+--- klibc-1.1.16.org/klcc/Kbuild	2006-01-06 07:11:43.000000000 +0100
++++ klibc-1.1.16/klcc/Kbuild	2006-01-06 19:31:36.327836000 +0100
+@@ -22,10 +22,10 @@
+ 	$(Q)echo 'EMAIN=$(KLIBCEMAIN)' >> $@
+ 	$(Q)echo 'BITSIZE=$(KLIBCBITSIZE)' >> $@
+ 	$(Q)echo 'VERSION=$(shell cat $(srctree)/version)' >> $@
+-	$(Q)echo 'prefix=$(INSTALLDIR)' >> $@
+-	$(Q)echo 'bindir=$(INSTALLDIR)/$(KCROSS)bin' >> $@
+-	$(Q)echo 'libdir=$(INSTALLDIR)/$(KCROSS)lib' >> $@
+-	$(Q)echo 'includedir=$(INSTALLDIR)/$(KCROSS)include' >> $@
++	$(Q)echo 'prefix=$(rpm_prefix)' >> $@
++	$(Q)echo 'bindir=$(rpm_bindir)' >> $@
++	$(Q)echo 'libdir=$(rpm_libdir)' >> $@
++	$(Q)echo 'includedir=$(rpm_includedir)' >> $@
+ 
+ 
+ # Generate klcc
+diff -urN klibc-1.1.16.org/klcc/klcc.in klibc-1.1.16/klcc/klcc.in
+--- klibc-1.1.16.org/klcc/klcc.in	2006-01-06 07:11:43.000000000 +0100
++++ klibc-1.1.16/klcc/klcc.in	2006-01-06 19:22:31.481785250 +0100
 @@ -3,22 +3,22 @@
  use IPC::Open3;
  
@@ -48,3 +67,23 @@
  	$shared = 0;
      } elsif ( $a eq '-s' ) {
  	$strip = 1;
+diff -urN klibc-1.1.16.org/Makefile klibc-1.1.16/Makefile
+--- klibc-1.1.16.org/Makefile	2006-01-06 07:11:43.000000000 +0100
++++ klibc-1.1.16/Makefile	2006-01-06 19:32:24.054818750 +0100
+@@ -21,11 +21,11 @@
+ export PERL       := perl
+ 
+ # Location for installation
+-export prefix      = /usr
+-export bindir      = $(prefix)/bin
+-export libdir      = $(prefix)/lib
+-export mandir      = $(prefix)/man
+-export INSTALLDIR  = $(prefix)/lib/klibc
++export prefix      = $(rpm_prefix)
++export bindir      = $(rpm_bindir)
++export libdir      = $(rpm_libdir)
++export mandir      = $(rpm_mandir)
++export INSTALLDIR  = $(rpm_libdir)/klibc
+ export INSTALLROOT =
+ 
+ # Create a fake .config as present in the kernel tree
