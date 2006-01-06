@@ -112,9 +112,15 @@ ln -sf  %{_kernelsrcdir}/include/linux/autoconf-up.h arch/%{_target_base_arch}/l
 for a in `ls arch`; do [ "$a" != "%{_target_base_arch}" ] && rm -rf arch/$a; done
 cd ..
 
+%ifarch sparc
+# hack; missing dependency in make system
+( cd klibc && %{__make} -f arch/sparc/Makefile.inc ARCH=sparc \
+        arch/sparc/sdiv.S arch/sparc/udiv.S arch/sparc/srem.S arch/sparc/urem.S )
+%endif
+
 %{__make} \
 	ARCH=%{_target_base_arch} \
-	CC="%{__cc}" \
+	HOSTCC="%{__cc}" \
 	rpm_prefix=%{_prefix} \
 	rpm_bindir=%{_bindir} \
 	rpm_includedir=%{_includedir}/klibc \
