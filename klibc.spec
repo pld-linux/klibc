@@ -115,10 +115,10 @@ cd ..
 %{__make} \
 	ARCH=%{_target_base_arch} \
 	CC="%{__cc}" \
-	prefix=%{_prefix} \
-	bindir=%{_bindir} \
-	includedir=%{_includedir}/klibc \
-	libdir=%{_libdir} \
+	rpm_prefix=%{_prefix} \
+	rpm_bindir=%{_bindir} \
+	rpm_includedir=%{_includedir}/klibc \
+	rpm_libdir=%{_libdir} \
 	SHLIBDIR=/%{_lib} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
