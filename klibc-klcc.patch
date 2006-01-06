@@ -1,5 +1,5 @@
---- klibc-1.0/klcc.in.orig	2005-03-07 22:44:49.000000000 +0100
-+++ klibc-1.0/klcc.in	2005-06-13 21:05:09.000000000 +0200
+--- klibc-1.0/klcc/klcc.in.orig	2005-03-07 22:44:49.000000000 +0100
++++ klibc-1.0/klcc/klcc.in	2005-06-13 21:05:09.000000000 +0200
 @@ -3,22 +3,22 @@
  use IPC::Open3;
  
@@ -48,20 +48,3 @@
  	$shared = 0;
      } elsif ( $a eq '-s' ) {
  	$strip = 1;
---- klibc-1.0/Makefile.orig	2005-03-07 19:17:15.000000000 +0100
-+++ klibc-1.0/Makefile	2005-06-13 20:57:41.000000000 +0200
-@@ -27,10 +27,10 @@
- 	echo 'STRIPFLAGS=$(STRIPFLAGS)' >> $@
- 	echo 'EMAIN=$(EMAIN)' >> $@
- 	echo 'BITSIZE=$(BITSIZE)' >> $@
--	echo 'prefix=$(INSTALLDIR)' >> $@
--	echo 'bindir=$(INSTALLDIR)/$(KCROSS)bin' >> $@
--	echo 'libdir=$(INSTALLDIR)/$(KCROSS)lib' >> $@
--	echo 'includedir=$(INSTALLDIR)/$(KCROSS)include' >> $@
-+	echo 'prefix=$(prefix)' >> $@
-+	echo 'bindir=$(bindir)' >> $@
-+	echo 'libdir=$(libdir)' >> $@
-+	echo 'includedir=$(includedir)' >> $@
- 
- $(CROSS)klcc: klcc.in $(CROSS)klibc.config makeklcc.pl
- 	$(PERL) makeklcc.pl klcc.in $(CROSS)klibc.config \
