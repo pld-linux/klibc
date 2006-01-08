@@ -13,6 +13,7 @@ Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.t
 # Source0-md5:	80b85e84306695ed61049720008dd409
 Patch0:		%{name}-klcc.patch
 Patch1:		%{name}-kill_interp_sohash.patch
+Patch2:		%{name}-ash-fix-mktemp-syntax.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	bison
@@ -88,6 +89,7 @@ Narzêdzia statycznie zlinkowane z klibc.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 rm -rf include/{asm,asm-generic,linux}
