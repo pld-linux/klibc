@@ -144,7 +144,11 @@ install klcc/klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
 install klibc/libc.* klibc/arch/%{_target_base_arch}/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
 install klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
 install dash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
+install dash/sh.shared.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh.g
 install dash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
+install dash/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh.g
+install usr/kinit/*/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
+install usr/kinit/*/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
