@@ -5,16 +5,15 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
 Name:		klibc
-Version:	1.3
+Version:	1.3.21
 Release:	1
 License:	BSD/GPL
 Group:		Libraries
-#Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
-Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	eac2cd9f32c443a3b45668d85b7e2782
+Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
+# Source0-md5:	f4b7d9cf529818d09936d9124c19f288
+#Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-klcc.patch
 Patch1:		%{name}-kill_interp_sohash.patch
-Patch2:		%{name}-ash-fix-mktemp-syntax.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 %{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	bison
@@ -90,22 +89,21 @@ Narzêdzia statycznie zlinkowane z klibc.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
-rm -rf include/{asm,asm-generic,linux}
+rm -rf usr/include/{asm,asm-generic,linux}
 %ifarch ppc powerpc
 if [ -d %{_kernelsrcdir}/include/asm-powerpc ]; then
-	install -d include/asm
-	cp -a %{_kernelsrcdir}/include/asm-ppc/* include/asm/
-	cp -a %{_kernelsrcdir}/include/asm-powerpc/* include/asm/
+	install -d usr/include/asm
+	cp -a %{_kernelsrcdir}/include/asm-ppc/* usr/include/asm/
+	cp -a %{_kernelsrcdir}/include/asm-powerpc/* usr/include/asm/
 else
-	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} usr/include/asm
 fi
 %else
-	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} include/asm
+	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} usr/include/asm
 %endif
-cd include
+cd usr/include
 ln -sf %{_kernelsrcdir}/include/asm-generic .
 ln -sf %{_kernelsrcdir}/include/linux .
 %if %{with dist_kernel}
@@ -113,11 +111,11 @@ ln -sf %{_kernelsrcdir}/include/linux .
 ln -sf  %{_kernelsrcdir}/include/linux/autoconf-up.h arch/%{_target_base_arch}/linux/autoconf.h
 %endif
 for a in `ls arch`; do [ "$a" != "%{_target_base_arch}" ] && rm -rf arch/$a; done
-cd ..
+cd ../..
 
 %ifarch sparc
 # hack; missing dependency in make system
-( cd klibc && %{__make} -f arch/sparc/Makefile.inc ARCH=sparc \
+( cd usr/klibc && %{__make} -f arch/sparc/Makefile.inc ARCH=sparc \
         arch/sparc/sdiv.S arch/sparc/udiv.S arch/sparc/srem.S arch/sparc/urem.S )
 %endif
 
@@ -138,19 +136,19 @@ install -d $RPM_BUILD_ROOT/%{_lib}
 install -d $RPM_BUILD_ROOT%{_includedir}/klibc
 install -d $RPM_BUILD_ROOT%{_libdir}/klibc/bin-{shared,static}
 
-cp -a include/* $RPM_BUILD_ROOT%{_includedir}/klibc
+cp -a usr/include/* $RPM_BUILD_ROOT%{_includedir}/klibc
 install klcc/klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc/klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
-install klibc/libc.* klibc/arch/%{_target_base_arch}/crt0.o klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
-install klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
-install dash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
-install dash/sh.shared.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh.g
-install dash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
-install dash/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh.g
+install usr/klibc/libc.* usr/klibc/arch/%{_target_base_arch}/crt0.o usr/klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
+install usr/klibc/klibc.so $RPM_BUILD_ROOT/%{_lib}
+install usr/dash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
+install usr/dash/sh.shared.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh.g
+install usr/dash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
+install usr/dash/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh.g
 install usr/kinit/*/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install usr/kinit/*/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
-install utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
-install utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
+install usr/utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
+install usr/utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
 %clean
 rm -rf $RPM_BUILD_ROOT
