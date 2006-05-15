@@ -4,7 +4,7 @@ diff -urN klibc-1.1.16.org/klcc/Kbuild klibc-1.1.16/klcc/Kbuild
 @@ -22,10 +22,10 @@
  	$(Q)echo 'EMAIN=$(KLIBCEMAIN)' >> $@
  	$(Q)echo 'BITSIZE=$(KLIBCBITSIZE)' >> $@
- 	$(Q)echo 'VERSION=$(shell cat $(srctree)/version)' >> $@
+ 	$(Q)echo 'VERSION=$(shell cat $(srctree)/usr/klibc/version)' >> $@
 -	$(Q)echo 'prefix=$(INSTALLDIR)' >> $@
 -	$(Q)echo 'bindir=$(INSTALLDIR)/$(KCROSS)bin' >> $@
 -	$(Q)echo 'libdir=$(INSTALLDIR)/$(KCROSS)lib' >> $@
