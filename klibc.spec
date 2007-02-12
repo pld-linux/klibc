@@ -3,7 +3,7 @@
 %bcond_without	dist_kernel	# build without distribution kernel-headers
 #
 Summary:	Minimalistic libc subset for use with initramfs
-Summary(pl):	Zminimalizowany podzbiór biblioteki C do u¿ywania z initramfs
+Summary(pl.UTF-8):   Zminimalizowany podzbiÃ³r biblioteki C do uÅ¼ywania z initramfs
 Name:		klibc
 Version:	1.4.34
 Release:	1
@@ -30,15 +30,15 @@ initramfs. It is deliberately written for small size, minimal
 entaglement and portability, not speed. It is definitely a work in
 progress, and a lot of things are still missing.
 
-%description -l pl
-klibc w zamierzeniu ma byæ minimalistycznym podzbiorem biblioteki libc
-do u¿ycia z initramfs. Celem jest minimalizacja, przeno¶no¶æ ale nie
-szybko¶æ. klibc jest rozwijan± bibliotek± w zwi±zku z czym nadal
+%description -l pl.UTF-8
+klibc w zamierzeniu ma byÄ‡ minimalistycznym podzbiorem biblioteki libc
+do uÅ¼ycia z initramfs. Celem jest minimalizacja, przenoÅ›noÅ›Ä‡ ale nie
+szybkoÅ›Ä‡. klibc jest rozwijanÄ… bibliotekÄ… w zwiÄ…zku z czym nadal
 brakuje wielu rzeczy.
 
 %package devel
 Summary:	Development files for klibc
-Summary(pl):	Pliki dla programistów klibc
+Summary(pl.UTF-8):   Pliki dla programistÃ³w klibc
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	binutils
@@ -47,43 +47,43 @@ Requires:	binutils
 %description devel
 Small libc for building embedded applications - development files.
 
-%description devel -l pl
-Ma³a libc do budowania aplikacji wbudowanych - pliki dla programistów.
+%description devel -l pl.UTF-8
+MaÅ‚a libc do budowania aplikacji wbudowanych - pliki dla programistÃ³w.
 
 %package static
 Summary:	Static klibc libraries
-Summary(pl):	Biblioteki statyczne klibc
+Summary(pl.UTF-8):   Biblioteki statyczne klibc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static klibc libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteki statyczne klibc.
 
 %package utils-shared
 Summary:	Utilities dynamically linked with klibc
-Summary(pl):	Narzêdzia dynamicznie zlinkowane z klibc
+Summary(pl.UTF-8):   NarzÄ™dzia dynamicznie zlinkowane z klibc
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description utils-shared
 Utilities dynamically linked with klibc.
 
-%description utils-shared -l pl
-Narzêdzia dynamicznie zlinkowane z klibc.
+%description utils-shared -l pl.UTF-8
+NarzÄ™dzia dynamicznie zlinkowane z klibc.
 
 %package utils-static
 Summary:	Utilities statically linked with klibc
-Summary(pl):	Narzêdzia statycznie zlinkowane z klibc
+Summary(pl.UTF-8):   NarzÄ™dzia statycznie zlinkowane z klibc
 Group:		Base
 
 %description utils-static
 Utilities staticly linked with klibc.
 
-%description utils-static -l pl
-Narzêdzia statycznie zlinkowane z klibc.
+%description utils-static -l pl.UTF-8
+NarzÄ™dzia statycznie zlinkowane z klibc.
 
 %prep
 %setup -q
