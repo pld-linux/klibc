@@ -3,7 +3,7 @@
 %bcond_without	dist_kernel	# build without distribution kernel-headers
 #
 Summary:	Minimalistic libc subset for use with initramfs
-Summary(pl.UTF-8):   Zminimalizowany podzbiór biblioteki C do używania z initramfs
+Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
 Version:	1.4.34
 Release:	1
@@ -38,7 +38,7 @@ brakuje wielu rzeczy.
 
 %package devel
 Summary:	Development files for klibc
-Summary(pl.UTF-8):   Pliki dla programistów klibc
+Summary(pl.UTF-8):	Pliki dla programistów klibc
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	binutils
@@ -52,7 +52,7 @@ Mała libc do budowania aplikacji wbudowanych - pliki dla programistów.
 
 %package static
 Summary:	Static klibc libraries
-Summary(pl.UTF-8):   Biblioteki statyczne klibc
+Summary(pl.UTF-8):	Biblioteki statyczne klibc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -64,7 +64,7 @@ Biblioteki statyczne klibc.
 
 %package utils-shared
 Summary:	Utilities dynamically linked with klibc
-Summary(pl.UTF-8):   Narzędzia dynamicznie zlinkowane z klibc
+Summary(pl.UTF-8):	Narzędzia dynamicznie zlinkowane z klibc
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
@@ -76,7 +76,7 @@ Narzędzia dynamicznie zlinkowane z klibc.
 
 %package utils-static
 Summary:	Utilities statically linked with klibc
-Summary(pl.UTF-8):   Narzędzia statycznie zlinkowane z klibc
+Summary(pl.UTF-8):	Narzędzia statycznie zlinkowane z klibc
 Group:		Base
 
 %description utils-static
