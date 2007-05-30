@@ -6,7 +6,7 @@ Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
 Version:	1.4.34
-Release:	1
+Release:	2
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
@@ -109,7 +109,7 @@ ln -sf %{_kernelsrcdir}/include/asm-generic .
 ln -sf %{_kernelsrcdir}/include/linux .
 %if %{with dist_kernel}
 [ ! -d arch/%{_target_base_arch}/linux ] && mkdir arch/%{_target_base_arch}/linux
-ln -sf  %{_kernelsrcdir}/include/linux/autoconf-up.h arch/%{_target_base_arch}/linux/autoconf.h
+ln -sf  %{_kernelsrcdir}/include/linux/autoconf.h arch/%{_target_base_arch}/linux/autoconf.h
 %endif
 for a in `ls arch`; do [ "$a" != "%{_target_base_arch}" ] && rm -rf arch/$a; done
 cd ../..
