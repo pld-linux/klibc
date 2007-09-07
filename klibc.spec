@@ -11,13 +11,12 @@ License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	481dfdef7273f2cc776c2637f481f017
-#Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-klcc.patch
 Patch1:		%{name}-kill_interp_sohash.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
-%{?with_dist_kernel:BuildRequires:	kernel-headers >= 2.4}
 BuildRequires:	bison
 BuildRequires:	flex
+BuildRequires:	linux-libc-headers >= 7:2.6.20
 BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRequires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,7 +41,7 @@ Summary(pl.UTF-8):	Pliki dla programistów klibc
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	binutils
-%{?with_dist_kernel:Requires:	kernel-headers >= 2.4}
+Requires:	linux-libc-headers >= 7:2.6.20
 
 %description devel
 Small libc for building embedded applications - development files.
@@ -91,33 +90,18 @@ Narzędzia statycznie zlinkowane z klibc.
 %patch1 -p1
 
 %build
-ln -s %{_kernelsrcdir} linux
-rm -rf usr/include/{asm,asm-generic,linux}
-%ifarch ppc powerpc
-if [ -d %{_kernelsrcdir}/include/asm-powerpc ]; then
-	install -d usr/include/asm
-	cp -a %{_kernelsrcdir}/include/asm-ppc/* usr/include/asm/
-	cp -a %{_kernelsrcdir}/include/asm-powerpc/* usr/include/asm/
-else
-	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} usr/include/asm
-fi
-%else
-	ln -sf %{_kernelsrcdir}/include/asm-%{_target_base_arch} usr/include/asm
-%endif
 cd usr/include
-ln -sf %{_kernelsrcdir}/include/asm-generic .
-ln -sf %{_kernelsrcdir}/include/linux .
-%if %{with dist_kernel}
-[ ! -d arch/%{_target_base_arch}/linux ] && mkdir arch/%{_target_base_arch}/linux
-ln -sf  %{_kernelsrcdir}/include/linux/autoconf.h arch/%{_target_base_arch}/linux/autoconf.h
-%endif
-for a in `ls arch`; do [ "$a" != "%{_target_base_arch}" ] && rm -rf arch/$a; done
+ln -sf /usr/include/asm-generic .
+ln -sf /usr/include/asm .
+ln -sf /usr/include/linux .
 cd ../..
+install -d linux
+ln -sf ../usr/include linux/include
 
-%ifarch sparc
+%ifarch sparc sparcv9
 # hack; missing dependency in make system
-( cd usr/klibc && %{__make} -f arch/sparc/Makefile.inc ARCH=sparc \
-        arch/sparc/sdiv.S arch/sparc/udiv.S arch/sparc/srem.S arch/sparc/urem.S )
+%{__make} -C usr/klibc -f arch/sparc/Makefile.inc ARCH=sparc \
+        arch/sparc/sdiv.S arch/sparc/udiv.S arch/sparc/srem.S arch/sparc/urem.S
 %endif
 
 %{__make} \
