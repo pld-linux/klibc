@@ -98,12 +98,6 @@ cd ../..
 install -d linux
 ln -sf ../usr/include linux/include
 
-%ifarch sparc sparcv9
-# hack; missing dependency in make system
-%{__make} -C usr/klibc -f arch/sparc/Makefile.inc ARCH=sparc \
-        arch/sparc/sdiv.S arch/sparc/udiv.S arch/sparc/srem.S arch/sparc/urem.S
-%endif
-
 %{__make} \
 	ARCH=%{_target_base_arch} \
 	HOSTCC="%{__cc}" \
