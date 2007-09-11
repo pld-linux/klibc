@@ -92,9 +92,13 @@ Narzędzia statycznie zlinkowane z klibc.
 
 %build
 cd usr/include
-ln -sf /usr/include/asm-generic .
-ln -sf /usr/include/asm .
 ln -sf /usr/include/linux .
+ln -sf /usr/include/asm .
+ln -sf /usr/include/asm-generic .
+%ifarch %{x8664}
+ln -sf /usr/include/asm-i386 .
+ln -sf /usr/include/asm-x86_64 .
+%endif
 %ifarch sparc64
 ln -sf /usr/include/asm-sparc .
 ln -sf /usr/include/asm-sparc64 .
