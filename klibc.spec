@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	dist_kernel	# build without distribution kernel-headers
+%bcond_with	verbose		# verbose build
 #
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
@@ -94,6 +95,11 @@ cd usr/include
 ln -sf /usr/include/asm-generic .
 ln -sf /usr/include/asm .
 ln -sf /usr/include/linux .
+%ifarch sparc64
+ln -sf /usr/include/asm-sparc .
+ln -sf /usr/include/asm-sparc64 .
+%endif
+
 cd ../..
 install -d linux
 ln -sf ../usr/include linux/include
@@ -106,6 +112,7 @@ ln -sf ../usr/include linux/include
 	rpm_includedir=%{_includedir}/klibc \
 	rpm_libdir=%{_libdir} \
 	SHLIBDIR=/%{_lib} \
+	%{?with_verbose:KBUILD_VERBOSE=1} \
 	OPTFLAGS="%{rpmcflags} -Os -fomit-frame-pointer -falign-functions=0 \
 		-falign-jumps=0 -falign-loops=0 -ffreestanding"
 
