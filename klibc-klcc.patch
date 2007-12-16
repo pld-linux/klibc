@@ -26,9 +26,9 @@ diff -urN klibc-1.1.16.org/klcc/klcc.in klibc-1.1.16/klcc/klcc.in
 -@includes = ("-I${prefix}/${KCROSS}include/arch/${ARCH}",
 -	     "-I${prefix}/${KCROSS}include/bits${BITSIZE}",
 -	     "-I${prefix}/${KCROSS}include");
-+@includes = ("-I${includedir}/arch/${ARCH}",
-+	     "-I${includedir}/bits${BITSIZE}",
-+	     "-I${includedir}");
++@includes = ("-idirafter", "${includedir}/arch/${ARCH}",
++	     "-idirafter", "${includedir}/bits${BITSIZE}",
++	     "-idirafter", "${includedir}");
  
  # Default optimization options (for compiles without -g)
  @optopt =  @OPTFLAGS;
