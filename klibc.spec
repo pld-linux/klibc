@@ -6,18 +6,18 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
-Version:	1.5
-Release:	2
+Version:	1.5.8
+Release:	1
 License:	BSD/GPL
 Group:		Libraries
-Source0:	http://www.kernel.org/pub/linux/libs/klibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	481dfdef7273f2cc776c2637f481f017
+Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
+# Source0-md5:	20f33e4a1b1a3fab754335d66b930f9c
 Patch0:		%{name}-klcc.patch
 Patch1:		%{name}-kill_interp_sohash.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	linux-libc-headers >= 7:2.6.20
+BuildRequires:	linux-libc-headers >= 7:2.6.24-1
 BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRequires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,7 +42,7 @@ Summary(pl.UTF-8):	Pliki dla programistów klibc
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	binutils
-Requires:	linux-libc-headers >= 7:2.6.20
+Requires:	linux-libc-headers >= 7:2.6.24-1
 
 %description devel
 Small libc for building embedded applications - development files.
@@ -92,17 +92,15 @@ Narzędzia statycznie zlinkowane z klibc.
 
 %build
 cd usr/include
-ln -sf /usr/include/linux .
 ln -sf /usr/include/asm .
 ln -sf /usr/include/asm-generic .
-%ifarch %{x8664}
-ln -sf /usr/include/asm-i386 .
-ln -sf /usr/include/asm-x86_64 .
-%endif
 %ifarch sparc64
 ln -sf /usr/include/asm-sparc .
 ln -sf /usr/include/asm-sparc64 .
 %endif
+ln -sf /usr/include/linux .
+# early-userspace needs acces to e.g. uvesafb.h.
+ln -sf /usr/include/video .
 
 cd ../..
 install -d linux
