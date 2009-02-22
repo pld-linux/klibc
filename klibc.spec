@@ -95,11 +95,9 @@ Group:		Base
 
 %description utils-static
 Utilities staticly linked with klibc.
-Programs in this package have debugging information not stripped.
 
 %description utils-static -l pl.UTF-8
 Narzędzia statycznie zlinkowane z klibc.
-Programy zawarte w tym pakiecie zawierają informację dla debugera.
 
 %package utils-static-debug
 Summary:	Utilities statically linked with klibc (unstripped)
@@ -109,9 +107,11 @@ Requires:	%{name}-utils-static = %{version}-%{release}
 
 %description utils-static-debug
 Utilities staticly linked with klibc.
+Programs in this package have debugging information not stripped.
 
 %description utils-static-debug -l pl.UTF-8
 Narzędzia statycznie zlinkowane z klibc.
+Programy zawarte w tym pakiecie zawierają informację dla debugera.
 
 %prep
 %setup -q
