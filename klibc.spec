@@ -82,7 +82,7 @@ Requires:	%{name}-utils-shared = %{version}-%{release}
 
 %description utils-shared-debug
 Utilities dynamically linked with klibc.
-Programs in this package debugging information not stripped.
+Programs in this package have debugging information not stripped.
 
 %description utils-shared-debug -l pl.UTF-8
 Narzędzia dynamicznie zlinkowane z klibc.
@@ -95,7 +95,7 @@ Group:		Base
 
 %description utils-static
 Utilities staticly linked with klibc.
-Programs in this package debugging information not stripped.
+Programs in this package have debugging information not stripped.
 
 %description utils-static -l pl.UTF-8
 Narzędzia statycznie zlinkowane z klibc.
