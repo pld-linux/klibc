@@ -7,7 +7,7 @@ Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
 Version:	1.5.15
-Release:	1
+Release:	2
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
@@ -74,6 +74,20 @@ Utilities dynamically linked with klibc.
 %description utils-shared -l pl.UTF-8
 Narzędzia dynamicznie zlinkowane z klibc.
 
+%package utils-shared-debug
+Summary:	Utilities dynamically linked with klibc (unstripped)
+Summary(pl.UTF-8):	Narzędzia dynamicznie zlinkowane z klibc
+Group:		Base
+Requires:	%{name}-utils-shared = %{version}-%{release}
+
+%description utils-shared-debug
+Utilities dynamically linked with klibc.
+Programs in this package debugging information not stripped.
+
+%description utils-shared-debug -l pl.UTF-8
+Narzędzia dynamicznie zlinkowane z klibc.
+Programy zawarte w tym pakiecie zawierają informację dla debugera.
+
 %package utils-static
 Summary:	Utilities statically linked with klibc
 Summary(pl.UTF-8):	Narzędzia statycznie zlinkowane z klibc
@@ -81,8 +95,22 @@ Group:		Base
 
 %description utils-static
 Utilities staticly linked with klibc.
+Programs in this package debugging information not stripped.
 
 %description utils-static -l pl.UTF-8
+Narzędzia statycznie zlinkowane z klibc.
+Programy zawarte w tym pakiecie zawierają informację dla debugera.
+
+%package utils-static-debug
+Summary:	Utilities statically linked with klibc (unstripped)
+Summary(pl.UTF-8):	Narzędzia statycznie zlinkowane z klibc
+Group:		Base
+Requires:	%{name}-utils-static = %{version}-%{release}
+
+%description utils-static-debug
+Utilities staticly linked with klibc.
+
+%description utils-static-debug -l pl.UTF-8
 Narzędzia statycznie zlinkowane z klibc.
 
 %prep
@@ -138,6 +166,8 @@ install usr/kinit/*/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 install usr/utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install usr/utils/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 
+ln -s %{_libdir}/klibc/bin-shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -160,10 +190,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils-shared
 %defattr(644,root,root,755)
+%{_libdir}/klibc/bin
 %dir %{_libdir}/klibc/bin-shared
 %attr(755,root,root) %{_libdir}/klibc/bin-shared/*
+%exclude %{_libdir}/klibc/bin-shared/*.g
+
+%files utils-shared-debug
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/klibc/bin-shared/*.g
 
 %files utils-static
 %defattr(644,root,root,755)
 %dir %{_libdir}/klibc/bin-static
 %attr(755,root,root) %{_libdir}/klibc/bin-static/*
+%exclude %{_libdir}/klibc/bin-static/*.g
+
+%files utils-static-debug
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/klibc/bin-static/*.g
