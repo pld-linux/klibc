@@ -75,17 +75,19 @@ Narzędzia dynamicznie zlinkowane z klibc.
 
 %package utils-shared-debug
 Summary:	Utilities dynamically linked with klibc (unstripped)
-Summary(pl.UTF-8):	Narzędzia dynamicznie zlinkowane z klibc
+Summary(pl.UTF-8):	Narzędzia dynamicznie zlinkowane z klibc (z informacjami dla debuggera)
 Group:		Base
 Requires:	%{name}-utils-shared = %{version}-%{release}
 
 %description utils-shared-debug
 Utilities dynamically linked with klibc.
+
 Programs in this package have debugging information not stripped.
 
 %description utils-shared-debug -l pl.UTF-8
 Narzędzia dynamicznie zlinkowane z klibc.
-Programy zawarte w tym pakiecie zawierają informację dla debugera.
+
+Programy zawarte w tym pakiecie zawierają informacje dla debuggera.
 
 %package utils-static
 Summary:	Utilities statically linked with klibc
@@ -100,17 +102,19 @@ Narzędzia statycznie zlinkowane z klibc.
 
 %package utils-static-debug
 Summary:	Utilities statically linked with klibc (unstripped)
-Summary(pl.UTF-8):	Narzędzia statycznie zlinkowane z klibc
+Summary(pl.UTF-8):	Narzędzia statycznie zlinkowane z klibc (z informacjami dla debuggera)
 Group:		Base
 Requires:	%{name}-utils-static = %{version}-%{release}
 
 %description utils-static-debug
 Utilities staticly linked with klibc.
+
 Programs in this package have debugging information not stripped.
 
 %description utils-static-debug -l pl.UTF-8
 Narzędzia statycznie zlinkowane z klibc.
-Programy zawarte w tym pakiecie zawierają informację dla debugera.
+
+Programy zawarte w tym pakiecie zawierają informacje dla debuggera.
 
 %prep
 %setup -q
