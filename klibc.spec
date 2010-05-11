@@ -1,4 +1,8 @@
 #
+# TODO:
+#    - warning: Installed (but unpackaged) file(s) found:
+#               /usr/lib/klibc/libc.so.hash
+#
 # Conditional build:
 %bcond_without	dist_kernel	# build without distribution kernel-headers
 %bcond_with	verbose		# verbose build
@@ -6,12 +10,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
-Version:	1.5.15
-Release:	3
+Version:	1.5.18
+Release:	1
 License:	BSD/GPL
 Group:		Libraries
-Source0:	http://www.kernel.org/pub/linux/libs/klibc/Testing/%{name}-%{version}.tar.bz2
-# Source0-md5:	db2152a8a03bd81e21a5f451f537ae3d
+Source0:	http://www.kernel.org/pub/linux/libs/klibc/Current/%{name}-%{version}.tar.bz2
+# Source0-md5:	5c8b6577b9acb3809cace6e118cdd55b
 Patch0:		%{name}-klcc.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
 BuildRequires:	bison
