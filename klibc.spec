@@ -21,8 +21,9 @@ URL:		http://www.zytor.com/mailman/listinfo/klibc/
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	linux-libc-headers >= 7:2.6.24-1
-BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRequires:	perl-base
+BuildRequires:	perl-modules
+BuildRequires:	rpmbuild(macros) >= 1.153
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		no_install_post_strip	1
