@@ -10,15 +10,17 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
-Version:	1.5.21
+Version:	1.5.22
 Release:	1
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/Current/%{name}-%{version}.tar.bz2
-# Source0-md5:	c232f3fd4e733f4d6ff8909fd54b9970
+# Source0-md5:	2eb5ef12978099736be9b0d0d7d5e946
 Patch0:		%{name}-klcc.patch
 Patch1:		%{name}-make.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
+# ld.bfd binary
+BuildRequires:	binutils >= 2.20.51.0.6
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	linux-libc-headers >= 7:2.6.24-1
@@ -146,6 +148,8 @@ ln -sf ../usr/include linux/include
 %{__make} \
 	ARCH=%{_target_base_arch} \
 	HOSTCC="%{__cc}" \
+	CC="%{__cc}" \
+	LD="ld.bfd" \
 	rpm_prefix=%{_prefix} \
 	rpm_bindir=%{_bindir} \
 	rpm_includedir=%{_includedir}/klibc \
@@ -191,7 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/klibc
 %attr(755,root,root) %{_libdir}/klibc/*.so
 %{_libdir}/klibc/*.o
-%{_mandir}/man1/*
+%{_mandir}/man1/klcc.1*
 
 %files static
 %defattr(644,root,root,755)
