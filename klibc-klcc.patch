@@ -16,14 +16,13 @@ diff -urN klibc-1.1.16.org/klcc/Kbuild klibc-1.1.16/klcc/Kbuild
  
  
  # Generate klcc
-diff -urN klibc-1.1.16.org/klcc/klcc.in klibc-1.1.16/klcc/klcc.in
---- klibc-1.1.16.org/klcc/klcc.in	2006-01-06 07:11:43.000000000 +0100
-+++ klibc-1.1.16/klcc/klcc.in	2006-01-06 19:22:31.481785250 +0100
+--- klibc-2.0/klcc/klcc.in.orig	2012-05-29 23:41:34.000000000 +0200
++++ klibc-2.0/klcc/klcc.in	2012-06-15 21:25:24.514959356 +0200
 @@ -3,22 +3,22 @@
  use IPC::Open3;
  
  # Standard includes
--@includes = ("-I${prefix}/${KCROSS}include/arch/${ARCH}",
+-@includes = ("-I${prefix}/${KCROSS}include/arch/${ARCHDIR}",
 -	     "-I${prefix}/${KCROSS}include/bits${BITSIZE}",
 -	     "-I${prefix}/${KCROSS}include");
 +@includes = ("-idirafter", "${includedir}/arch/${ARCH}",
@@ -59,7 +58,7 @@ diff -urN klibc-1.1.16.org/klcc/klcc.in klibc-1.1.16/klcc/klcc.in
  $debugging = 0;	   		# -g or -p option present?
  $strip = 0;			# -s option present?
  undef $output;			# -o option present?
-@@ -175,6 +175,7 @@
+@@ -186,6 +186,7 @@
      } elsif ( $a eq '-shared' ) {
  	$shared = 1;
      } elsif ( $a eq '-static' ) {
