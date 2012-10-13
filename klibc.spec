@@ -10,12 +10,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
-Version:	2.0.1
+Version:	2.0.2
 Release:	1
 License:	BSD/GPL
 Group:		Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/klibc/2.0/%{name}-%{version}.tar.xz
-# Source0-md5:	f52b302a46fc52298d5f31c580f73d3a
+# Source0-md5:	59af2c01dc1b0fc1edaed0a9c470adf4
 Patch0:		%{name}-klcc.patch
 Patch1:		aligned_u64.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
