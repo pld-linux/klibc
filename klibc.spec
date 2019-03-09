@@ -10,12 +10,12 @@
 Summary:	Minimalistic libc subset for use with initramfs
 Summary(pl.UTF-8):	Zminimalizowany podzbiór biblioteki C do używania z initramfs
 Name:		klibc
-Version:	2.0.4
-Release:	2
+Version:	2.0.6
+Release:	1
 License:	BSD/GPL
 Group:		Libraries
 Source0:	https://www.kernel.org/pub/linux/libs/klibc/2.0/%{name}-%{version}.tar.xz
-# Source0-md5:	7417eeabb2e7954f58a34fba87646ddc
+# Source0-md5:	d01e2f8fa8a616c8523787ea4c634e8b
 Patch0:		%{name}-klcc.patch
 Patch1:		aligned_u64.patch
 URL:		http://www.zytor.com/mailman/listinfo/klibc/
@@ -172,10 +172,11 @@ install klcc/klcc -D $RPM_BUILD_ROOT%{_bindir}/klcc
 install klcc/klcc.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/klcc.1
 install usr/klibc/libc.* usr/klibc/arch/%{_target_base_arch}/crt0.o usr/klibc/interp.o $RPM_BUILD_ROOT%{_libdir}/klibc
 install usr/klibc/klibc-*.so $RPM_BUILD_ROOT/%{_lib}
-install usr/dash/sh.shared $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh
-install usr/dash/sh.shared.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared/sh.g
-install usr/dash/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh
-install usr/dash/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static/sh.g
+install usr/dash/shared/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
+install usr/dash/shared/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
+install usr/dash/static/sh $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
+install usr/dash/static/sh.g $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
+install usr/gzip/{gunzip,gzip,gzip.g,zcat} $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 install usr/kinit/*/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
 install usr/kinit/*/static/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-static
 install usr/utils/shared/* $RPM_BUILD_ROOT%{_libdir}/klibc/bin-shared
