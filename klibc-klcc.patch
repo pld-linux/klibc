@@ -16,8 +16,8 @@ diff -urN klibc-1.1.16.org/klcc/Kbuild klibc-1.1.16/klcc/Kbuild
  
  
  # Generate klcc
---- klibc-2.0/klcc/klcc.in.orig	2012-05-29 23:41:34.000000000 +0200
-+++ klibc-2.0/klcc/klcc.in	2012-06-15 21:25:24.514959356 +0200
+--- klibc-2.0.9/klcc/klcc.in.orig	2021-04-29 16:03:19.000000000 +0200
++++ klibc-2.0.9/klcc/klcc.in	2021-05-08 18:55:05.039418288 +0200
 @@ -3,22 +3,22 @@
  use IPC::Open3;
  
@@ -40,11 +40,11 @@ diff -urN klibc-1.1.16.org/klcc/Kbuild klibc-1.1.16/klcc/Kbuild
  # Options and libraries to pass to ld; shared versus static
 -@staticopt = ("${prefix}/${KCROSS}lib/crt0.o");
 -@staticlib = ("${prefix}/${KCROSS}lib/libc.a");
--@sharedopt = (@EMAIN, "${prefix}/${KCROSS}lib/interp.o");
+-@sharedopt = (@EMAIN, map { "${prefix}/${KCROSS}lib/$_" } @CRTSHARED);
 -@sharedlib = ('-R', "${prefix}/${KCROSS}lib/libc.so");
 +@staticopt = ("${libdir}/klibc/crt0.o");
 +@staticlib = ("${libdir}/klibc/libc.a");
-+@sharedopt = (@EMAIN, "${libdir}/klibc/interp.o");
++@sharedopt = (@EMAIN, map { "${libdir}/klibc/$_" } @CRTSHARED);
 +@sharedlib = ('-R', "${libdir}/klibc/libc.so");
  
  # Returns the language (-x option string) for a specific extension.
