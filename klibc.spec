@@ -17,7 +17,6 @@ Group:		Libraries
 Source0:	https://www.kernel.org/pub/linux/libs/klibc/2.0/%{name}-%{version}.tar.xz
 # Source0-md5:	7554a9759ae71e9ba3729991c8ae7f63
 Patch0:		%{name}-klcc.patch
-Patch1:		aligned_u64.patch
 URL:		https://lists.zytor.com/klibc/
 # ld.bfd binary
 BuildRequires:	binutils >= 2.20.51.0.6
@@ -129,7 +128,6 @@ Programy zawarte w tym pakiecie zawierają informacje dla debuggera.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p2
 
 %build
 cd usr/include
