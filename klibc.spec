@@ -128,7 +128,7 @@ Programy zawarte w tym pakiecie zawierają informacje dla debuggera.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 cd usr/include
